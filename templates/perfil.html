@@ -1,0 +1,74 @@
+{% extends "bases/dashboard.html" %}
+{% block content %}
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Perfil</h6>
+  </div>
+  <div class="card-body row">
+    <style type="text/css">
+      .logo {
+        background-image: url("{{ object.imagen.url }}");
+        background-position: center;
+        background-size: cover;
+      }
+    </style>
+    <div class="bg-login-image logo col-lg-6"></div>
+    <div class="table-responsive col-lg-6">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <tbody>
+          <tr>
+            <td>Cédula</td>
+            <td>{{ object.cedula }}</td>
+          </tr>
+          <tr>
+            <td>Nombre</td>
+            <td>{{ object.nombre }}</td>
+          </tr>
+          <tr>
+            <td>Teléfono</td>
+            <td>{{ object.telefono }}</td>
+          </tr>
+          <tr>
+            <td>Dirección</td>
+            <td>{{ object.direccion }}</td>
+          </tr>
+          <tr>
+            <td>Correo</td>
+            <td>{{ object.correo }}</td>
+          </tr>
+          <tr>
+            <td>Cargo</td>
+            <td>{{ object.get_cargo_display }}</td>
+          </tr>
+          {% if cargo == "P" %}
+          <tr>
+            <td>Horas</td>
+            <td>{{ object.horas }}</td>
+          </tr>
+          {% endif %}
+          <tr>
+            <td>Salario</td>
+            <td>{{ object.salario }}</td>
+          </tr>
+          <tr>
+            <td>Fecha de Nacimiento</td>
+            <td>{{ object.fecha_nacimiento }}</td>
+          </tr>
+          <tr>
+            <td>Fecha de Inicio</td>
+            <td>{{ object.fecha_inicio }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row px-3 mb-3">
+    <div class="col-xl-6">
+      <a href="{% url 'editar_perfil' %}" class="btn btn-success btn-user btn-block">Editar Perfil</a>
+    </div>
+    <div class="col-xl-6">
+      <a href="{% url 'password_change' %}" class="btn btn-primary btn-user btn-block">Cambiar Contraseña</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

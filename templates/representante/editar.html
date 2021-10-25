@@ -1,0 +1,42 @@
+{% extends "bases/dashboard.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Editar Representante</h6>
+    </div>
+    <div class="card-body">
+        <form class="user" method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label>Cédula</label>
+                    {% render_field form.cedula class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Cédula" %}
+                </div>
+                <div class="form-group col-sm-6">
+                    <label>Nombre</label>
+                    {% render_field form.nombre class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Nombre" %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <label>Teléfono</label>
+                    {% render_field form.telefono class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Teléfono" %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <label>Dirección</label>
+                    {% render_field form.direccion class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Dirección" %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-user btn-block">
+                Guardar
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

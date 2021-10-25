@@ -1,0 +1,37 @@
+{% extends "bases/dashboard.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Agregar Horario</h6>
+    </div>
+    <div class="card-body">
+        <form class="user" method="post" action="">
+            {% csrf_token %}
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label>Asignatura</label>
+                    {% render_field form.asignatura class="form-control form-select" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Asignatura" %}
+                </div>
+                <div class="form-group col-sm-6">
+                    <label>Dia</label>
+                    {% render_field form.dia class="form-control form-select" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Dia" type="date" %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label>Hora de Inicio</label>
+                    {% render_field form.hora_inicio class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Hora de Inicio" %}
+                </div>
+                <div class="form-group col-sm-6">
+                    <label>Hora de Finalización</label>
+                    {% render_field form.hora_fin class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Hora de Finalización" %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-user btn-block">
+                Guardar
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

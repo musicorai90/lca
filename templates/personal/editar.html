@@ -1,0 +1,93 @@
+{% extends "bases/dashboard.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Editar Personal</h6>
+    </div>
+    <div class="card-body">
+        <form class="user" method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label>Cédula</label>
+                    {% render_field form.cedula class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Cédula" %}
+                </div>
+                <div class="form-group col-sm-6">
+                    <label>Nombre</label>
+                    {% render_field form.nombre class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Nombre" %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label>Teléfono</label>
+                    {% render_field form.telefono class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Teléfono" %}
+                </div>
+                <div class="form-group col-sm-6">
+                    <label>Cargo</label>
+                    {% render_field form.cargo class="form-control form-select" id="form-cargo" aria-describedby="emailHelp" placeholder="Cargo" onchange="mostrarHoras();" %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <label>Dirección</label>
+                    {% render_field form.direccion class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Dirección" %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <label>Correo</label>
+                    {% render_field form.correo class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Correo" %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label>Salario</label>
+                    {% render_field form.salario class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Salario" %}
+                </div>
+                <div class="form-group col-sm-6">
+                    <label>Fecha de Nacimiento</label>
+                    {% render_field form.fecha_nacimiento class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Fecha de Nacimiento" %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label>Fecha de Inicio</label>
+                    {% render_field form.fecha_inicio class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Fecha de Inicio" %}
+                </div>
+                <div class="form-group col-sm-6" id="form-horas">
+                    <label>Horas Semanales</label>
+                    {% render_field form.horas class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Horas" %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <button type="button" class="btn btn-primary btn-user" onclick="document.getElementById('form-imagen').click()" id="button-imagen">Seleccionar Otra Imagen</button>
+                    <div class="d-none">
+                        {% render_field form.imagen id="form-imagen" onchange="cambiarImagen();" %}
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-user btn-block">
+                Guardar
+            </button>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    function mostrarHoras() {
+        if (document.getElementById('form-cargo').value === 'P') {
+            document.getElementById('form-horas').style.display = "block";
+        } else {
+            document.getElementById('form-horas').style.display = "none"
+        }
+    }
+
+    function cambiarImagen(valor) {
+        document.getElementById('button-imagen').textContent = "Seleccionar otra imagen";
+    }
+</script>
+{% endblock %}

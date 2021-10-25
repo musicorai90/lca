@@ -1,0 +1,61 @@
+{% extends "bases/dashboard.html" %}
+{% block content %}
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Alumno</h6>
+  </div>
+  <div class="card-body row">
+    <style type="text/css">
+      .logo {
+        background-image: url("{{ object.imagen.url }}");
+        background-position: center;
+        background-size: cover;
+      }
+    </style>
+    <div class="bg-login-image logo col-lg-6"></div>
+    <div class="table-responsive col-lg-6">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <tbody>
+          <tr>
+            <td>ID</td>
+            <td>{{ object.id }}</td>
+          </tr>
+          <tr>
+            <td>Cédula</td>
+            <td>{{ object.cedula }}</td>
+          </tr>
+          <tr>
+            <td>Nombre</td>
+            <td>{{ object.nombre }}</td>
+          </tr>
+          <tr>
+            <td>Teléfono</td>
+            <td>{{ object.telefono }}</td>
+          </tr>
+          <tr>
+            <td>Dirección</td>
+            <td>{{ object.direccion }}</td>
+          </tr>
+          <tr>
+            <td>Correo</td>
+            <td>{{ object.correo }}</td>
+          </tr>
+          <tr>
+            <td>Representante</td>
+            <td>{{ object.representante }}</td>
+          </tr>
+          <tr>
+            <td>Fecha de Nacimiento</td>
+            <td>{{ object.fecha_nacimiento }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row px-3 mb-3">
+    <div class="col">
+      <a href="{% url 'editar_alumno' object.id %}" class="btn btn-success btn-block">Editar</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

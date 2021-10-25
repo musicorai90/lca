@@ -1,0 +1,59 @@
+{% extends "bases/dashboard.html" %}
+{% load app_extras %}
+{% block content %}
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Bien</h6>
+  </div>
+  <div class="card-body row">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <tbody>
+          <tr>
+            <td>ID</td>
+            <td>{{ object.id }}</td>
+          </tr>
+          <tr>
+            <td>Bien</td>
+            <td>{{ object.bien }}</td>
+          </tr>
+          <tr>
+            <td>Encargado</td>
+            <td>
+              {% for p in object.bien.departamento.personal.all %}
+                {{ p }}
+              {% endfor %}
+            </td>
+          </tr>
+          <tr>
+            <td>Status</td>
+            <td>{{ object.get_status_display }}</td>
+          </tr>
+          <tr>
+            <td>Fecha de Inicio</td>
+            <td>{{ object.fecha_inicio }}</td>
+          </tr>
+          {% if object.fecha_fin %}
+          <tr>
+            <td>Fecha de Finalización</td>
+            <td>{{ object.fecha_fin }}</td>
+          </tr>
+          <tr>
+            <td>Observación</td>
+            <td>{{ object.observacion }}</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% get_grupo_lca request.user.groups as usuario_grupo %}
+  {% if usuario_grupo == 'secretario' and object.status == 'E' %}
+  <div class="row px-3 mb-3">
+    <div class="col d-flex justify-content-center">
+      <a href="{% url 'editar_reporte' object.id %}" class="btn btn-success btn-block">Responder</a>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

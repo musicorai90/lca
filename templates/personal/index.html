@@ -1,0 +1,50 @@
+{% extends "bases/dashboard.html" %}
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="m-0 font-weight-bold text-primary">Personal</h6>
+        <a href="{% url 'agregar_personal' %}" class="btn btn-circle btn-primary"><i class="fas fa-fw fa-plus"></i></a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Cargo</th>
+                        <th>Teléfono</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Cargo</th>
+                        <th>Teléfono</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for object in object_list %}
+                    <tr>
+                        <td>{{ object.id }}</td>
+                        <td>{{ object.nombre }}</td>
+                        <td>{{ object.get_cargo_display }}</td>
+                        <td>{{ object.telefono }}</td>
+                        <td>
+                            <a href="{% url 'ver_personal' object.id %}" class="btn btn-circle btn-primary"><i class="fas fa-fw fa-eye"></i></a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No hay registros.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

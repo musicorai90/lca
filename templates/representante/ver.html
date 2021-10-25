@@ -1,0 +1,41 @@
+{% extends "bases/dashboard.html" %}
+{% block content %}
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Representante</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <tbody>
+          <tr>
+            <td>ID</td>
+            <td>{{ object.id }}</td>
+          </tr>
+          <tr>
+            <td>Cédula</td>
+            <td>{{ object.cedula }}</td>
+          </tr>
+          <tr>
+            <td>Nombre</td>
+            <td>{{ object.nombre }}</td>
+          </tr>
+          <tr>
+            <td>Teléfono</td>
+            <td>{{ object.telefono }}</td>
+          </tr>
+          <tr>
+            <td>Dirección</td>
+            <td>{{ object.direccion }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row px-3 mb-3">
+    <div class="col d-flex justify-content-center">
+      <a href="{% url 'editar_representante' object.id %}" class="btn btn-success btn-block">Editar</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

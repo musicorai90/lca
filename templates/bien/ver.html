@@ -1,0 +1,67 @@
+{% extends "bases/dashboard.html" %}
+{% block content %}
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Bien</h6>
+  </div>
+  <div class="card-body row">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <tbody>
+          <tr>
+            <td>ID</td>
+            <td>{{ object.id }}</td>
+          </tr>
+          <tr>
+            <td>Nombre</td>
+            <td>{{ object.nombre }}</td>
+          </tr>
+          <tr>
+            <td>Status</td>
+            <td>{{ object.status }}</td>
+          </tr>
+          <tr>
+            <td>Fecha</td>
+            <td>{{ object.fecha }}</td>
+          </tr>
+          <tr>
+            <td>Tipo</td>
+            <td>{{ object.tipo }}</td>
+          </tr>
+          <tr>
+            <td>Departamento</td>
+            <td>{{ object.departamento }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row px-3 mb-3">
+    <div class="col-xl-6">
+      <a href="{% url 'editar_bien' object.id %}" class="btn btn-success btn-block">Editar</a>
+    </div>
+    <div class="col-xl-6">
+      <a href="#" class="btn btn-danger btn-block" data-toggle="modal" data-target="#eliminarConfirmacion">Eliminar</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="eliminarConfirmacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿Estás Seguro?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Se va a eliminar "{{ object }}".</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-primary" href="{% url 'eliminar_bien' object.id %}">Eliminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

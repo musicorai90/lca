@@ -1,0 +1,92 @@
+{% extends "bases/dashboard.html" %}
+{% block content %}
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Personal</h6>
+  </div>
+  <div class="card-body row">
+    <style type="text/css">
+      .logo {
+        background-image: url("{{ object.imagen.url }}");
+        background-position: center;
+        background-size: cover;
+      }
+    </style>
+    <div class="bg-login-image logo col-lg-6"></div>
+    <div class="table-responsive col-lg-6">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <tbody>
+          <tr>
+            <td>ID</td>
+            <td>{{ object.id }}</td>
+          </tr>
+          <tr>
+            <td>Cédula</td>
+            <td>{{ object.cedula }}</td>
+          </tr>
+          <tr>
+            <td>Nombre</td>
+            <td>{{ object.nombre }}</td>
+          </tr>
+          <tr>
+            <td>Teléfono</td>
+            <td>{{ object.telefono }}</td>
+          </tr>
+          <tr>
+            <td>Dirección</td>
+            <td>{{ object.direccion }}</td>
+          </tr>
+          <tr>
+            <td>Correo</td>
+            <td>{{ object.correo }}</td>
+          </tr>
+          <tr>
+            <td>Cargo</td>
+            <td>{{ object.get_cargo_display }}</td>
+          </tr>
+          {% if object.cargo == 'P' %}
+          <tr>
+            <td>Horas Semanales</td>
+            <td>{{ object.horas }}</td>
+          </tr>
+          {% endif %}
+          <tr>
+            <td>Salario</td>
+            <td>{{ object.salario }}</td>
+          </tr>
+          <tr>
+            <td>Fecha de Nacimiento</td>
+            <td>{{ object.fecha_nacimiento }}</td>
+          </tr>
+          <tr>
+            <td>Fecha de Inicio</td>
+            <td>{{ object.fecha_inicio }}</td>
+          </tr>
+          {% if object.fecha_fin %}
+          <tr>
+            <td>Fecha de Salida</td>
+            <td>{{ object.fecha_fin }}</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% if request.user.id != object.usuario.id %}
+  <div class="row px-3 mb-3">
+    <div class="col-xl-6">
+      <a href="{% url 'editar_personal' object.id %}" class="btn btn-success btn-block">Editar</a>
+    </div>
+    {% if object.fecha_fin is None %}
+    <div class="col-xl-6">
+      <a href="{% url 'desincorporar_personal' object.id %}" class="btn btn-danger btn-block">Desincorporar</a>
+    </div>
+    {% else %}
+    <div class="col-xl-6">
+      <a href="{% url 'incorporar_personal' object.id %}" class="btn btn-primary btn-block">Incorporar</a>
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+.mensajes {
+	position: fixed;
+	right: 3rem;
+	bottom: 3rem;
+	z-index: 1000;
+}
+
+.dropdown-toggle::after {
+	display: none;
+}
+
+.form-select {
+	font-size: .8rem;
+	border-radius: 10rem;
+	height: 50px;
+}

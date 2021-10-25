@@ -1,0 +1,33 @@
+{% extends "bases/dashboard.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Agregar Memorandum</h6>
+    </div>
+    <div class="card-body">
+        <form class="user" method="post" action="">
+            {% csrf_token %}
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label>Personal</label>
+                    {% render_field form.personal class="form-control form-select" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Personal" %}
+                </div>
+                <div class="form-group col-sm-6">
+                    <label>Fecha</label>
+                    {% render_field form.fecha class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Fecha" type="date" %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <label>Observación</label>
+                    {% render_field form.observacion class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Observación" %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-user btn-block">
+                Guardar
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

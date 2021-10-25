@@ -1,0 +1,32 @@
+{% extends "bases/dashboard.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Agregar Departamento</h6>
+    </div>
+    <div class="card-body">
+        <form class="user" method="post" action="">
+            {% csrf_token %}
+            <div class="row">
+                <div class="form-group col">
+                    <label>Nombre</label>
+                    {% render_field form.nombre class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Nombre" %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col">
+                    <label>Encargado</label>
+                    {% render_field form.personal class="form-control" id="form-personal" aria-describedby="emailHelp" placeholder="Encargado" %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-user btn-block">
+                Guardar
+            </button>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    document.getElementById('form-personal').multiple = false;
+</script>
+{% endblock %}

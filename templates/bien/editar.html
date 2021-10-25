@@ -1,0 +1,43 @@
+{% extends "bases/dashboard.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Editar Bien</h6>
+    </div>
+    <div class="card-body">
+        <form class="user" method="post" action="">
+            {% csrf_token %}
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label>Nombre</label>
+                    {% render_field form.nombre class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Nombre" %}
+                </div>
+                <div class="form-group col-sm-6">
+                    <label>Status</label>
+                    {% render_field form.status class="form-control form-select" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Status" %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label>Fecha</label>
+                    {% render_field form.fecha class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Fecha" %}
+                </div>
+                <div class="form-group col-sm-6">
+                    <label>Tipo</label>
+                    {% render_field form.tipo class="form-control form-select" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Tipo" %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label>Departamento</label>
+                    {% render_field form.departamento class="form-control form-select" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Departamento" %}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-user btn-block">
+                Guardar
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
