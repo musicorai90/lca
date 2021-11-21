@@ -2,6 +2,7 @@
 {% load app_extras %}
 
 {% get_user_lca request.user as usuario %}
+{% get_grupo_lca request.user.groups as grupo %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +33,6 @@
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -48,6 +48,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Items -->
+            {% if grupo == "secretario" %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'tipo_bien' %}">
                     <i class="fas fa-fw fa-couch"></i>
@@ -69,24 +70,26 @@
                     <span>Bien</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'reporte' %}">
-                    <i class="fas fa-fw fa-sticky-note"></i>
-                    <span>Reporte</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'permiso' %}">
-                    <i class="fas fa-fw fa-plus"></i>
-                    <span>Permiso</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'memorandum' %}">
-                    <i class="fas fa-fw fa-sticky-note"></i>
-                    <span>Memorandum</span></a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="{% url 'asistencia_personal' %}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Asistencia - Personal</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'representante' %}">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Representante</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'alumno' %}">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Alumno</span></a>
+            </li>
+            {% endif %}
+            {% if grupo == "secretario" or grupo == "profesor" %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'reporte' %}">
+                    <i class="fas fa-fw fa-sticky-note"></i>
+                    <span>Reporte</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'asignatura' %}">
@@ -99,16 +102,6 @@
                     <span>Horario</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'representante' %}">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>Representante</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'alumno' %}">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>Alumno</span></a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="{% url 'asignatura_alumno' %}">
                     <i class="fas fa-fw fa-book"></i>
                     <span>Asignatura - Alumno</span></a>
@@ -118,6 +111,18 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>Asistencia - Alumno</span></a>
             </li>
+            {% endif %}
+            {% if grupo == "secretario" or grupo == "profesor" or grupo == "administrativo" or grupo == "obrero" %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'permiso' %}">
+                    <i class="fas fa-fw fa-plus"></i>
+                    <span>Permiso</span></a>
+            </li>            <li class="nav-item">
+                <a class="nav-link" href="{% url 'memorandum' %}">
+                    <i class="fas fa-fw fa-sticky-note"></i>
+                    <span>Memorandum</span></a>
+            </li>
+            {% endif %}
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -201,7 +206,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Cerrar Sesión</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>

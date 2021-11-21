@@ -1,10 +1,20 @@
 {% extends "bases/dashboard.html" %}
+{% load app_extras %}
+
+{% get_user_lca request.user as usuario %}
 {% block content %}
 <div class="card shadow mb-4">
+    {% get_grupo_lca request.user.groups as usuario_grupo %}
+    {% if usuario_grupo == 'secretario' %}
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-primary">Asignatura - Alumno</h6>
         <a href="{% url 'agregar_asignatura_alumno' %}" class="btn btn-circle btn-primary"><i class="fas fa-fw fa-plus"></i></a>
     </div>
+    {% else %}
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Asignatura - Alumno</h6>
+    </div>
+    {% endif %}
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -26,11 +36,13 @@
                 </tfoot>
                 <tbody>
                     {% for object in object_list %}
+                    {% if usuario_grupo == 'secretario' or object.asignatura.personal == usuario %}
                     <tr>
                         <td>{{ object.id }}</td>
                         <td>{{ object.asignatura }}</td>
                         <td>{{ object.alumno }}</td>
                         <td>
+                            {% if usuario_grupo == 'secretario' %}
                             <a href="{% url 'editar_asignatura_alumno' object.id %}" class="btn btn-circle btn-success"><i class="fas fa-fw fa-edit"></i></a>
                             <div class="dropdown" style="display: inline-block;">
                                 <button class="btn btn-circle btn-danger dropdown-toggle" type="button" id="dropdownMenuButton{{ object.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -40,8 +52,10 @@
                                     <a class="dropdown-item" href="{% url 'eliminar_asignatura_alumno' object.id %}"><i class="fas fa-fw fa-check text-success"></i></a>
                                 </div>
                             </div>
+                            {% endif %}
                         </td>
                     </tr>
+                    {% endif %}
                     {% empty %}
                     <tr>
                         <td colspan="4" class="text-center">No hay registros.</td>

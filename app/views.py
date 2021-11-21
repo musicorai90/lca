@@ -195,7 +195,7 @@ class EditarDepartamento(SuccessMessageMixin, GroupRequiredMixin, UpdateView):
 	success_message = "Editado con éxito."
 
 class Bien(GroupRequiredMixin, ListView):
-	group_required = u'secretario'
+	group_required = [u'secretario', u'profesor']
 	template_name = "bien/index.html"
 	model = models.Bien
 
@@ -230,20 +230,27 @@ class EliminarBien(SuccessMessageMixin, GroupRequiredMixin, DeleteView):
 		return self.post(*args, **kwargs)
 
 class Reporte(GroupRequiredMixin, ListView):
-	group_required = [u'secretario', u'administrativo', u'profesor']
+	group_required = [u'secretario', u'profesor']
 	template_name = "reporte/index.html"
 	model = models.Reporte
 
 class AgregarReporte(SuccessMessageMixin, GroupRequiredMixin, CreateView):
-	group_required = [u'administrativo', u'profesor']
+	group_required = [u'profesor']
 	template_name = "reporte/agregar.html"
 	model = models.Reporte
 	fields = ['bien']
 	success_url = "/reporte/"
 	success_message = "Creado con éxito."
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		usuario = models.Personal.objects.filter(cedula=self.request.user.username)[0]
+		departamento = models.Departamento.objects.filter(personal=usuario)[0]
+		context['form'].fields['bien'].queryset = models.Bien.objects.filter(departamento=departamento)
+		return context
+
 class VerReporte(GroupRequiredMixin, DetailView):
-	group_required = [u'secretario', u'administrativo', u'profesor']
+	group_required = [u'secretario', u'profesor']
 	template_name = "reporte/ver.html"
 	model = models.Reporte
 
@@ -259,11 +266,14 @@ class EditarReporte(SuccessMessageMixin, GroupRequiredMixin, UpdateView):
 		obj = form.save(commit=False)
 		if obj.status != 'E':
 			obj.fecha_fin = timezone.now()
+		if obj.status == 'A':
+			obj.bien.status = "D"
+			obj.bien.save()
 		obj.save()
 		return super().form_valid(form)
 
 class Permiso(GroupRequiredMixin, ListView):
-	group_required = [u'secretario', u'administrativo', u'profesor']
+	group_required = [u'secretario', u'administrativo', u'profesor', u'obrero']
 	template_name = "permiso/index.html"
 	model = models.Permiso
 
@@ -282,15 +292,21 @@ class AgregarSecretarioPermiso(SuccessMessageMixin, GroupRequiredMixin, CreateVi
 		return super().form_valid(form)
 
 class AgregarPersonalPermiso(SuccessMessageMixin, GroupRequiredMixin, CreateView):
-	group_required = [u'administrativo', u'profesor']
+	group_required = [u'administrativo', u'profesor', u'obrero']
 	template_name = "permiso/agregar_personal.html"
 	model = models.Permiso
 	fields = ['fecha_inicio','fecha_fin','imagen']
 	success_url = "/permiso/"
 	success_message = "Creado con éxito."
 
+	def form_valid(self, form):
+		obj = form.save(commit=False)
+		obj.personal = models.Personal.objects.filter(cedula=self.request.user.username)[0]
+		obj.save()
+		return super().form_valid(form)
+
 class VerPermiso(GroupRequiredMixin, DetailView):
-	group_required = [u'secretario', u'administrativo', u'profesor']
+	group_required = [u'secretario', u'administrativo', u'profesor', u'obrero']
 	template_name = "permiso/ver.html"
 	model = models.Permiso
 
@@ -303,7 +319,7 @@ class EditarPermiso(SuccessMessageMixin, GroupRequiredMixin, UpdateView):
 	success_message = "Respondido con éxito."
 
 class Memorandum(GroupRequiredMixin, ListView):
-	group_required = u'secretario'
+	group_required = [u'secretario', u'administrativo', u'profesor', u'obrero']
 	template_name = "memorandum/index.html"
 	model = models.Memorandum
 
@@ -316,7 +332,7 @@ class AgregarMemorandum(SuccessMessageMixin, GroupRequiredMixin, CreateView):
 	success_message = "Creado con éxito."
 
 class VerMemorandum(GroupRequiredMixin, DetailView):
-	group_required = u'secretario'
+	group_required = [u'secretario', u'administrativo', u'profesor', u'obrero']
 	template_name = "memorandum/ver.html"
 	model = models.Memorandum
 
@@ -368,7 +384,7 @@ class EliminarAsistenciaPersonal(SuccessMessageMixin, GroupRequiredMixin, Delete
 		return self.post(*args, **kwargs)
 
 class Asignatura(GroupRequiredMixin, ListView):
-	group_required = u'secretario'
+	group_required = [u'secretario', u'profesor']
 	template_name = "asignatura/index.html"
 	model = models.Asignatura
 
@@ -394,7 +410,7 @@ class EditarAsignatura(SuccessMessageMixin, GroupRequiredMixin, UpdateView):
 	success_message = "Editado con éxito."
 
 class Horario(GroupRequiredMixin, ListView):
-	group_required = u'secretario'
+	group_required = [u'secretario', u'profesor']
 	template_name = "horario/index.html"
 	model = models.Horario
 
@@ -499,7 +515,7 @@ class EditarAlumno(SuccessMessageMixin, GroupRequiredMixin, UpdateView):
 		return super().form_valid(form)
 
 class AsignaturaAlumno(GroupRequiredMixin, ListView):
-	group_required = u'secretario'
+	group_required = [u'secretario', u'profesor']
 	template_name = "asignatura_alumno/index.html"
 	model = models.Asignatura_Alumno
 
@@ -529,20 +545,30 @@ class EliminarAsignaturaAlumno(SuccessMessageMixin, GroupRequiredMixin, DeleteVi
 		return self.post(*args, **kwargs)
 
 class AsistenciaAlumno(GroupRequiredMixin, ListView):
-	group_required = u'secretario'
+	group_required = [u'secretario', u'profesor']
 	template_name = "asistencia_alumno/index.html"
 	model = models.Asistencia_Alumno
 
 class AgregarAsistenciaAlumno(SuccessMessageMixin, GroupRequiredMixin, CreateView):
-	group_required = u'secretario'
+	group_required = u'profesor'
 	template_name = "asistencia_alumno/agregar.html"
 	model = models.Asistencia_Alumno
 	fields = ['asignatura_alumno','fecha']
 	success_url = "/asistencia_alumno/"
 	success_message = "Creado con éxito."
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		usuario = models.Personal.objects.filter(cedula=self.request.user.username)[0]
+		asignatura = models.Asignatura.objects.filter(personal=usuario)
+		aa = models.Asignatura_Alumno.objects.none()
+		for a in asignatura:
+			aa = aa | models.Asignatura_Alumno.objects.filter(asignatura=a)
+		context['form'].fields['asignatura_alumno'].queryset = aa
+		return context
+
 class EditarAsistenciaAlumno(SuccessMessageMixin, GroupRequiredMixin, UpdateView):
-	group_required = u'secretario'
+	group_required = u'profesor'
 	template_name = "asistencia_alumno/editar.html"
 	model = models.Asistencia_Alumno
 	fields = ['asignatura_alumno','fecha']
@@ -550,7 +576,7 @@ class EditarAsistenciaAlumno(SuccessMessageMixin, GroupRequiredMixin, UpdateView
 	success_message = "Editado con éxito."
 
 class EliminarAsistenciaAlumno(SuccessMessageMixin, GroupRequiredMixin, DeleteView):
-	group_required = u'secretario'
+	group_required = u'profesor'
 	model = models.Asistencia_Alumno
 	success_url = "/asistencia_alumno/"
 

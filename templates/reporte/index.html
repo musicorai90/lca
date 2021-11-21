@@ -1,5 +1,7 @@
 {% extends "bases/dashboard.html" %}
 {% load app_extras %}
+
+{% get_user_lca request.user as usuario %}
 {% block content %}
 <div class="card shadow mb-4">
     {% get_grupo_lca request.user.groups as usuario_grupo %}
@@ -36,6 +38,7 @@
                 </tfoot>
                 <tbody>
                     {% for object in object_list %}
+                    {% if usuario_grupo == 'secretario' or object.bien.departamento.personal.first == usuario %}
                     <tr>
                         <td>{{ object.id }}</td>
                         <td>{{ object.bien }}</td>
@@ -45,6 +48,7 @@
                             <a href="{% url 'ver_reporte' object.id %}" class="btn btn-circle btn-primary"><i class="fas fa-fw fa-eye"></i></a>
                         </td>
                     </tr>
+                    {% endif %}
                     {% empty %}
                     <tr>
                         <td colspan="5" class="text-center">No hay registros.</td>

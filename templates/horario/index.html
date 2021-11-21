@@ -29,15 +29,17 @@
                 </tfoot>
                 <tbody>
                     {% for object in object_list %}
+                    {% if grupo == "secretario" or object.asignatura.personal == usuario %}
                     <tr>
                         <td>{{ object.id }}</td>
                         <td>{{ object.asignatura }}</td>
-                        <td>{{ object.dia }}</td>
+                        <td>{{ object.get_dia_display }}</td>
                         <td>{{ object.hora_inicio }} - {{ object.hora_fin }}</td>
                         <td>
                             <a href="{% url 'ver_horario' object.id %}" class="btn btn-circle btn-primary"><i class="fas fa-fw fa-eye"></i></a>
                         </td>
                     </tr>
+                    {% endif %}
                     {% empty %}
                     <tr>
                         <td colspan="5" class="text-center">No hay registros.</td>

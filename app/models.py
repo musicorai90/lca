@@ -76,7 +76,7 @@ class Bien(models.Model):
 
 class Reporte(models.Model):
 	observacion = models.CharField(max_length=100, null=True, blank=True)
-	status = models.CharField(max_length=1, choices=STATUS_2)
+	status = models.CharField(max_length=1, choices=STATUS_2, default="E")
 	fecha_inicio = models.DateField(default=timezone.now)
 	fecha_fin = models.DateField(null=True, blank=True)
 	bien = models.ForeignKey(Bien, on_delete=models.CASCADE)
