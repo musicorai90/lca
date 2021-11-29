@@ -68,4 +68,8 @@ urlpatterns = [
 	path('asistencia_alumno/agregar/', views.AgregarAsistenciaAlumno.as_view(), name="agregar_asistencia_alumno"),
 	path('asistencia_alumno/editar/<int:pk>/', views.EditarAsistenciaAlumno.as_view(), name="editar_asistencia_alumno"),
 	path('asistencia_alumno/eliminar/<int:pk>/', views.EliminarAsistenciaAlumno.as_view(), name="eliminar_asistencia_alumno"),
+	path('actividad/', views.Actividad.as_view(), name="actividad"),
+	path('actividad/agregar/', views.AgregarActividad.as_view(), name="agregar_actividad"),
+	path('actividad/ver/<int:pk>/', views.VerActividad.as_view(), name="ver_actividad"),
+	path('actividad/editar/<int:pk>/', views.EditarActividad.as_view(), name="editar_actividad"),
 ]

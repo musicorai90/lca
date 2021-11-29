@@ -1,0 +1,48 @@
+{% extends "bases/dashboard.html" %}
+{% block content %}
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Actividad</h6>
+  </div>
+  <div class="card-body row">
+    <style type="text/css">
+      .logo {
+        background-image: url("{{ object.imagen.url }}");
+        background-position: center;
+        background-size: cover;
+      }
+    </style>
+    <div class="table-responsive col">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <tbody>
+          <tr>
+            <td>ID</td>
+            <td>{{ object.id }}</td>
+          </tr>
+          <tr>
+            <td>Fecha</td>
+            <td>{{ object.fecha }}</td>
+          </tr>
+          <tr>
+            <td>Descripción</td>
+            <td>{{ object.descripcion }}</td>
+          </tr>
+          <tr>
+            <td colspan="2"><strong>Participantes</strong></td>
+          </tr>
+          {% for mamaguevo in object.participantes.all %}
+          <tr>
+            <td colspan="2">{{ mamaguevo.nombre }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row px-3 mb-3">
+    <div class="col">
+      <a href="{% url 'editar_actividad' object.id %}" class="btn btn-success btn-block">Editar</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

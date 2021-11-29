@@ -227,3 +227,8 @@ class Prestamo(models.Model):
 	def __str__(self):
 		cadena = "{0} - {1}"
 		return cadena.format(self.libro.nombre, self.alumno.nombre)
+
+class Actividad(models.Model):
+	fecha = models.DateField()
+	descripcion = models.CharField(max_length=100)
+	participantes = models.ManyToManyField(Personal)

@@ -583,3 +583,29 @@ class EliminarAsistenciaAlumno(SuccessMessageMixin, GroupRequiredMixin, DeleteVi
 	def get(self, *args, **kwargs):
 		messages.add_message(self.request, messages.INFO, 'Eliminado con éxito.')
 		return self.post(*args, **kwargs)
+
+class Actividad(GroupRequiredMixin, ListView):
+	group_required = u'secretario'
+	template_name = "actividad/index.html"
+	model = models.Actividad
+
+class AgregarActividad(SuccessMessageMixin, GroupRequiredMixin, CreateView):
+	group_required = u'secretario'
+	template_name = "actividad/agregar.html"
+	model = models.Actividad
+	fields = ['fecha', 'descripcion', 'participantes']
+	success_url = "/actividad/"
+	success_message = "Creado con éxito."
+
+class VerActividad(GroupRequiredMixin, DetailView):
+	group_required = u'secretario'
+	template_name = "actividad/ver.html"
+	model = models.Actividad
+
+class EditarActividad(SuccessMessageMixin, GroupRequiredMixin, UpdateView):
+	group_required = u'secretario'
+	template_name = "actividad/editar.html"
+	model = models.Actividad
+	fields = ['fecha', 'descripcion', 'participantes']
+	success_url = "/actividad/"
+	success_message = "Editado con éxito."
