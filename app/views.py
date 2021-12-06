@@ -3,10 +3,13 @@ from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils import timezone
+from django.http import HttpResponse
+
+from .utils import render_to_pdf
 
 from django.contrib.auth.models import User, Group
 from . import models
@@ -609,3 +612,18 @@ class EditarActividad(SuccessMessageMixin, GroupRequiredMixin, UpdateView):
 	fields = ['fecha', 'descripcion', 'participantes']
 	success_url = "/actividad/"
 	success_message = "Editado con éxito."
+
+def personal_pdf(request):
+	template = 'pdf/personal.html'
+	context = {'personal': models.Personal.objects.all()}
+	pdf = render_to_pdf(template, context)
+	if pdf:
+		response = HttpResponse(pdf, content_type='application/pdf')
+		filename = "personal.pdf"
+		content = "inline; filename='%s'" % filename
+		download = request.GET.get("download")
+		if download:
+			content = "attachment; filename='%s'" % filename
+		response['Content-Disposition'] = content
+		return response
+	return HttpResponse("Not found")

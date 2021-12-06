@@ -72,4 +72,5 @@ urlpatterns = [
 	path('actividad/agregar/', views.AgregarActividad.as_view(), name="agregar_actividad"),
 	path('actividad/ver/<int:pk>/', views.VerActividad.as_view(), name="ver_actividad"),
 	path('actividad/editar/<int:pk>/', views.EditarActividad.as_view(), name="editar_actividad"),
+	path('export/personal/', views.personal_pdf, name="personal_pdf"),
 ]

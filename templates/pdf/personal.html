@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Personal</title>
+    <style type="text/css">
+        @page {
+            size: A4 landscape;
+            margin: 1cm;
+        }
+        .table, td, th {  
+        border-bottom: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+        text-align: left;
+        }
+
+        .table {
+        border-collapse: collapse;
+        width: 100%;
+
+        }
+
+        .table th, td {
+        padding: 5px;
+        text-align: center;
+        }
+
+        .td{
+        word-break: inherit;
+        }
+
+        .list-group h3{
+            font-size: 3em;
+        }
+        .list-group p {
+            font-size: 1em;
+        }
+
+        .table1 {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 5px;
+            background-color: #fff;
+            border: none;
+            text-align: center;
+        }
+
+        .table1 td {
+            border: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <table class="table1">
+            <td>
+                <div class="list-group">
+                    <h3>Personal</h3>
+                </div>
+            </td>
+        </table>
+        <br/>
+        <table class="table">
+            <thead>
+                <tr>
+                	<th>Cedula</th>
+                	<th>Nombre</th>
+                	<th>Telefono</th>
+                	<th>Direccion</th>
+                	<th>Correo</th>
+                	<th>Cargo</th>
+                </tr>
+              </thead>
+              <tbody>
+              	{% for p in personal %}
+              	<tr>
+              		<td>{{ p.cedula }}</td>
+              		<td>{{ p.nombre }}</td>
+              		<td>{{ p.telefono }}</td>
+              		<td>{{ p.direccion }}</td>
+              		<td>{{ p.correo }}</td>
+              		<td>{{ p.get_cargo_display }}</td>
+              	</tr>
+              	{% endfor %}
+              </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
